@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useTheme } from '../Context/ThemeContext'
 import { GiKnifeFork } from "react-icons/gi";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { MdLogout } from "react-icons/md";
+import { MdLogout, MdOutlineFormatTextdirectionRToL } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 const Navbar = () => {
@@ -15,7 +15,9 @@ const Navbar = () => {
     const logout = () => {
         setCookies("access_token", "")
         window.localStorage.removeItem("userId")
-        navigate("/auth")
+        console.log("logout");
+
+        navigate("/login")
     }
     return (
         <motion.nav style={{ opacity: 1 }} className={`fixed top-0 w-full z-50 px-6 py-6 ${isDarkMode ? "bg-gray-950/80" : "bg-gray-50/80"} backdrop-blur-md border-b ${isDarkMode ? "border-gray-800" : "border-gray-200"}`}>
@@ -33,19 +35,29 @@ const Navbar = () => {
                 </div>
                 <div className="hidden md:flex items-center space-x-8">
                     {cookies.access_token ? (
-                        ["Home", "Create Recipe", "Save Recipe", `Logout`].map((item) => (
-                            <Link key={item} to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
-                                <motion.button
-                                    key={item}
-                                    whileHover={{ y: -2 }}
-                                    className={`text-sm uppercase tracking-wider transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
-                                >
-                                    {item}
-                                </motion.button>
-                            </Link>
-                        ))
+                        <>
+                            {["Home", "Create-Recipe", "Save-Recipe"].map((item) => (
+                                <Link key={item} to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
+                                    <motion.button
+                                        key={item}
+                                        whileHover={{ y: -2 }}
+                                        className={`text-sm uppercase tracking-wider transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
+                                    >
+                                        {item}
+                                    </motion.button>
+                                </Link>
+                            ))}
+
+                            <motion.button
+                                onClick={logout}
+                                whileHover={{ y: -2 }}
+                                className={`text-sm uppercase tracking-wider transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
+                            >Logout</motion.button>
+
+                        </>
                     ) : (
                         ["Home", "Login", "Signup"].map((item) => (
+
                             <Link key={item} to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
                                 <motion.button
                                     key={item}
@@ -55,6 +67,8 @@ const Navbar = () => {
                                     {item}
                                 </motion.button>
                             </Link>
+
+
                         ))
                     )}
 

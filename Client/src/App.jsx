@@ -8,6 +8,8 @@ import { ThemeProvider } from './Context/ThemeContext'
 import 'react-toastify/dist/ReactToastify.css'
 import Navbar from './Views/Navbar'
 import { useTheme } from './Context/ThemeContext'
+import CreateRecipe from './Views/CreateRecipe'
+import SaveRecipe from './Views/SaveRecipe'
 
 const AppContent = () => {
 
@@ -24,6 +26,8 @@ const AppContent = () => {
           <Route path='/' element={<Home />}></Route>
           <Route path='/signup' element={<Signup />}></Route>
           <Route path='/login' element={<Login />}></Route>
+          <Route path='/create-recipe' element={<CreateRecipe />}></Route>
+          <Route path='/save-recipe' element={<SaveRecipe />}></Route>
         </Routes>
         <ToastContainer />
       </BrowserRouter>
