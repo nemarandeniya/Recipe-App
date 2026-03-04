@@ -10,6 +10,7 @@ import Navbar from './Views/Navbar'
 import { useTheme } from './Context/ThemeContext'
 import CreateRecipe from './Views/CreateRecipe'
 import SaveRecipe from './Views/SaveRecipe'
+import Dashboard from './Views/Dashboard'
 
 const AppContent = () => {
 
@@ -23,7 +24,8 @@ const AppContent = () => {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Home />}></Route>
+          <Route path='/' element={<Dashboard />}></Route>
+          <Route path='/home' element={<Home />}></Route>
           <Route path='/signup' element={<Signup />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/create-recipe' element={<CreateRecipe />}></Route>

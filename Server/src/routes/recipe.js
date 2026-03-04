@@ -57,4 +57,20 @@ router.get("/savedRecipes/:userID", async (req, res) => {
     }
 })
 
+router.post("/removerecipe", async (req, res) => {
+
+    try {
+        const { userId, recipeID } = req.body
+        const user = await UserModel.findById(userId)
+        //each id eka check krnw recipe id ekata samana ndd kiyl
+        user.savedRecipes = user.savedRecipes.filter((id) => id.toString() !== recipeID)
+        await user.save()
+        res.json({ success: true, message: "Recipe removed", user })
+
+    } catch (error) {
+        res.status(500).json({ success: false, error: "Could not remove recipe" })
+
+    }
+})
+
 export { router as recipesRouter }

@@ -3,6 +3,8 @@ import axios from 'axios'
 import { useTheme } from '../Context/ThemeContext'
 import { motion } from "framer-motion";
 import { useGetUserID } from '../hooks/useGetUserID';
+import { FaTrash } from "react-icons/fa";
+import { toast } from 'react-toastify'
 
 const SaveRecipe = () => {
     const { isDarkMode, toggleDarkMode } = useTheme()
@@ -10,18 +12,34 @@ const SaveRecipe = () => {
     const [selectedRecipe, setSelectedRecipe] = useState(null)
     const userID = useGetUserID()
 
+    const removeRecipe = async (recipeID) => {
+        try {
+            await axios.post("http://localhost:3001/recipes/removerecipe", {
+                userId: userID,
+                recipeID
+            })
+            setSavedRecipes(prev => prev.filter(recipe => recipe._id !== recipeID))
+            setSelectedRecipe(null)
+            fetchSavedRecipe()
+            toast.success("recipe removed successfully")
 
-    useEffect(() => {
-        const fetchSavedRecipe = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/recipes/savedRecipes/${userID}`);
-                console.log(response.data.savedRecipes);
-
-                setSavedRecipes(response.data.savedRecipes);
-            } catch (error) {
-                console.error(error);
-            }
+        } catch (error) {
+            console.error(error)
         }
+    }
+
+
+    const fetchSavedRecipe = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/recipes/savedRecipes/${userID}`);
+            console.log(response.data.savedRecipes);
+
+            setSavedRecipes(response.data.savedRecipes);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
         fetchSavedRecipe()
     }, [])
 
@@ -81,8 +99,8 @@ const SaveRecipe = () => {
                             </button>
                             <div className="flex w-full justify-between">
                                 <h2 className="text-2xl font-bold mt-4 mb-4">{selectedRecipe.name}</h2>
-                                <button >
-                                    Saved
+                                <button onClick={() => removeRecipe(selectedRecipe._id)} className="p-3 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition">
+                                    <FaTrash size={20} />
                                 </button>
 
                             </div>

@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { useTheme } from '../Context/ThemeContext'
 import { GiKnifeFork } from "react-icons/gi";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { MdLogout, MdOutlineFormatTextdirectionRToL } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 const Navbar = () => {
@@ -17,7 +16,7 @@ const Navbar = () => {
         window.localStorage.removeItem("userId")
         console.log("logout");
 
-        navigate("/login")
+        navigate("/")
     }
     return (
         <motion.nav style={{ opacity: 1 }} className={`fixed top-0 w-full z-50 px-6 py-6 ${isDarkMode ? "bg-gray-950/80" : "bg-gray-50/80"} backdrop-blur-md border-b ${isDarkMode ? "border-gray-800" : "border-gray-200"}`}>
@@ -36,8 +35,9 @@ const Navbar = () => {
                 <div className="hidden md:flex items-center space-x-8">
                     {cookies.access_token ? (
                         <>
+
                             {["Home", "Create-Recipe", "Save-Recipe"].map((item) => (
-                                <Link key={item} to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
+                                <Link key={item} to={item === "Home" ? "/home" : `/${item.toLowerCase()}`}>
                                     <motion.button
                                         key={item}
                                         whileHover={{ y: -2 }}
@@ -56,9 +56,9 @@ const Navbar = () => {
 
                         </>
                     ) : (
-                        ["Home", "Login", "Signup"].map((item) => (
+                        ["Login", "Signup"].map((item) => (
 
-                            <Link key={item} to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
+                            <Link key={item} to={`/${item.toLowerCase()}`}>
                                 <motion.button
                                     key={item}
                                     whileHover={{ y: -2 }}

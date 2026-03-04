@@ -22,6 +22,7 @@ const RecipeCard = ({ recipe }) => {
             })
             toast.success("Recipe Saved Successfully!")
             setIsSaved(true)
+            setIsOpen(false)
             console.log(response);
 
         } catch (error) {
@@ -56,7 +57,10 @@ const RecipeCard = ({ recipe }) => {
                     alt={recipe.name}
                     className='w-full h-48 object-cover'
                 />
-                <div className="p-3 text-center  bg-white dark:bg-gray-800">
+                <div className={`p-3 text-center  ${isDarkMode
+                    ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
+                    : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
+                    }`}>
                     <h3 className='text-xl font-sans mb-2'>{recipe.name}</h3>
                     <p className='text-gray-700 dark:text-gray-300 '>
                         Cooking Time:{recipe.cookingTime}

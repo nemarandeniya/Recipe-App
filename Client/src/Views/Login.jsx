@@ -24,7 +24,7 @@ const Login = () => {
             console.log(response);
             if (response.data.success) {
                 toast.success("Successfully Login!")
-                navigate('/')
+                navigate('/home')
                 setCookies("access_token", response.data.token)
                 window.localStorage.setItem("userID", response.data.userId)
             }
