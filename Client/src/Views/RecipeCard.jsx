@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion";
 import { useTheme } from '../Context/ThemeContext'
-import { FaSave } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useGetUserID } from '../hooks/useGetUserID';
 import axios from 'axios'
 import { toast } from "react-toastify";
@@ -90,11 +90,11 @@ const RecipeCard = ({ recipe }) => {
                             <h2 className="text-2xl font-bold mt-4 mb-4">{recipe.name}</h2>
                             {savedRecipes.includes(recipe._id) ? (
                                 <button >
-                                    Saved
+                                    <FaHeart size={20} className='text-red-500' />
                                 </button>
                             ) : (
                                 <button onClick={() => saveRecipe(recipe._id)} className="p-3 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition">
-                                    <FaSave size={20} />
+                                    <FaRegHeart size={20} className='text-red-500' />
                                 </button>
                             )}
                         </div>

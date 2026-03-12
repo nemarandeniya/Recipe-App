@@ -7,8 +7,15 @@ const router = express.Router()
 
 router.get("/", async (req, res) => {
     try {
-        const response = await RecipeModel.find({})
-        res.json(response)
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;//limit → number of records per page
+
+        const skip = (page - 1) * limit//skip → skips previous records
+
+        const response = await RecipeModel.find({}).skip(skip).limit(limit)
+        const total = await RecipeModel.countDocuments()
+        res.json({ response, totalPages: Math.ceil(total / limit), currentPage: page })//totalPages → used by frontend to create page buttons
+
     } catch (error) {
         res.json(error)
     }
